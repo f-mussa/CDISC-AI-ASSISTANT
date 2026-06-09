@@ -10,6 +10,8 @@ In clinical trials, mapping raw operational data to CDISC standards is a meticul
 
 Instead of relying solely on statistical vector matching, which can cause collisions among short clinical acronyms, I engineered a **Hybrid Deterministic Metadata Router**. The engine intercepts user queries, applies natural language tokenization to strip filler words, and scans custom multi-field metadata tags (`submission_value`, `codelist_code`, `codelist`, and `synonyms`) using high-precision database filters. If a programmer asks for short acronyms (e.g. `LOC`), exact NCI codes (e.g. `C74456`), or full descriptive phrases (e.g. `Anatomical Location`), the router locks directly onto the correct global codelist family with 100% precision. If no direct metadata match is found, the system smoothly switches to a vector-space proximity fallback to retrieve the most contextually relevant pages. The extracted data is then fed to the **Gemini 2.5 Flash** model, which generates a concise, validated response with specific document sources and page citations.
 
+**[Live Demo](https://cdiscaiassistant.streamlit.app/)**
+
 ---
 
 ## ⚙️ Technical Blueprint & Engine Features
