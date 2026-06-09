@@ -1,0 +1,4 @@
+sdtmig_vector_db/
+.streamlit/
+__pycache__/
+*.pyc
