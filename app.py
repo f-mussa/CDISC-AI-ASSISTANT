@@ -43,6 +43,32 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 
 # Step 3: Connect to both SDTMIG/CT vector DBs
 chroma_client = chromadb.PersistentClient(path=DB_DIR)
+
+# Dynamically query what collections exist right now on the server instance
+existing_collections = [c.name for c in chroma_client.list_collections()]
+
+# If either collection is missing, trigger the build pipeline safely
+if 'sdtmig_v3_4' not in existing_collections or 'cdisc_ct' not in existing_collections:
+    with st.spinner("🧬 Initializing system container: Building missing CDISC Vector Collections on the cloud. This may take a few minutes..."):
+        try:
+            from embed_data import extract_and_index_pdf, extract_and_index_xls
+            
+            pdf_source = "./cdisc_docs/SDTMIG v3.4-FINAL_2022-07-21.pdf" 
+            excel_source = "./cdisc_docs/SDTM Terminology.xls"
+            
+            # Index the PDF if its collection is missing
+            if 'sdtmig_v3_4' not in existing_collections:
+                extract_and_index_pdf(pdf_source)
+                
+            # Index the Excel if its collection is missing
+            if 'cdisc_ct' not in existing_collections:
+                extract_and_index_xls(excel_source)
+                
+            st.success("🎉 All clinical collections compiled and verified!")
+        except Exception as e:
+            st.error(f"Failed to compile database on initial boot: {e}")
+            st.stop()
+
 pdf_collection = chroma_client.get_collection(name='sdtmig_v3_4')
 ct_collection = chroma_client.get_collection(name='cdisc_ct')
 
