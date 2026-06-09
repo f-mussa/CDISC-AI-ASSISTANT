@@ -28,6 +28,7 @@ I engineered this project using robust data engineering principles, semantic tex
 ```text
 CDISC-AI-ASSISTANT/
 │
+├── cdisc_docs/          # Stores raw SDTMIG and CDISC Controlled Terminology files 
 ├── embed_data.py        # Heavy text parsing, metadata mapping, and vector database indexing
 ├── app.py               # Live Streamlit application hosting the custom metadata routing and GenAI 
 ├── sdtmig_vector_db/    # Persistent vector database files(built during run and saved on the cloud) housing the embedded clinical context
