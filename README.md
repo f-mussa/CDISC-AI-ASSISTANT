@@ -30,6 +30,6 @@ CDISC-AI-ASSISTANT/
 │
 ├── embed_data.py        # Heavy text parsing, metadata mapping, and vector database indexing
 ├── app.py               # Live Streamlit application hosting the custom metadata routing and GenAI 
-├── sdtmig_vector_db/    # Persistent local vector database files housing the embedded clinical context
+├── sdtmig_vector_db/    # Persistent vector database files(built during run and saved on the cloud) housing the embedded clinical context
 ├── requirements.txt     # Explicit package dependencies (including pysqlite3-binary for environment) 
 └── README.md            # Technical documentation and project overview
